@@ -10,7 +10,7 @@
 
 **Objectif de la semaine :** repo structuré, générateur de logs v1, Kafka opérationnel.
 
-- ✅ Fait :
+- ✅ Fait : repo git srtucturé, docker compose configuré, kafak opérationnel
 - 🚧 Bloqué / retard :
 - 🧠 Appris :
 - ⚖️ Décision prise :
