@@ -1,0 +1,61 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  lint:
+    name: Lint & format check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install linters
+        run: pip install ruff black
+
+      - name: Ruff (erreurs réelles uniquement)
+        run: ruff check ingestion/ --select=E9,F63,F7,F82
+
+      - name: Black (check, pas de reformat auto)
+        run: black --check ingestion/ || true
+
+  test-generator:
+    name: Test unitaire générateur
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install deps
+        run: |
+          pip install -r ingestion/log-generator/requirements.txt
+          pip install pytest
+
+      - name: Run tests
+        run: |
+          # Les tests arrivent en S1-S2 ; pour l'instant, import check
+          python -c "import sys; sys.path.insert(0, 'ingestion/log-generator/src'); import generator; print('import OK')"
+
+  docker-build:
+    name: Build image log-generator
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: docker/setup-buildx-action@v3
+
+      - name: Build (sans push)
+        uses: docker/build-push-action@v6
+        with:
+          context: ingestion/log-generator
+          push: false
+          tags: sentinel-log-generator:ci

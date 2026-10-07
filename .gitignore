@@ -56,3 +56,12 @@ build/
 .cache/
 .pytest_cache/
 .mypy_cache/
+
+=========================
+Data
+=========================
+
+data/cicids2017/
+data/*.csv
+data/*.zip
+data/*.pcap
