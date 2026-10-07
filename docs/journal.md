@@ -10,12 +10,12 @@
 
 **Objectif de la semaine :** repo structuré, générateur de logs v1, Kafka opérationnel.
 
-- ✅ Fait : repo git srtucturé, docker compose configuré, kafak opérationnel, flux kafka
-- 🚧 Bloqué / retard :
-- 🧠 Appris :
-- ⚖️ Décision prise :
-- ➡️ Priorité S2 :
-- 📸 Preuve (capture, lien commit) :
+- ✅ Fait : Kafka 4.0.1 (KRaft) + UI opérationnels. Générateur de trafic avec 3 modes (normal/attack/mixed) et 3 attaques (port_scan, brute_force, syn_flood). Champ `label` = vérité terrain. Commandes PowerShell (`make.ps1`). CI GitHub Actions (lint, test, build). Docs : cahier des charges, 3 ADR, guide datasets.
+- 🚧 Bloqué : `make` non reconnu sous Windows → résolu avec `make.ps1`.
+- 🧠 Appris : Kafka KRaft (sans Zookeeper), format NetFlow-like JSON, importance du champ `label` pour l'évaluation ML.
+- ⚖️ Décision : Kafka (durabilité), Isolation Forest non supervisé (évite domain shift), GitHub Actions (repo public).
+- ➡️ Priorité S2 : topics structurés (`auth`, `alerts-raw`), premier consumer Spark, tests unitaires.
+- 📸 Preuve : capture Kafka UI + console consumer (voir `docs/WEEK1_RECAP.md`).
 
 ---
 
