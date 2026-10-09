@@ -21,22 +21,22 @@
 
 ## Semaine 2 - 12 → 16 octobre 2026
 
-- ✅ Fait :
-- 🚧 Bloqué / retard :
-- 🧠 Appris :
-- ⚖️ Décision prise :
-- ➡️ Priorité S3 :
+- ✅ Fait : Topics Kafka structurés créés (netflow, auth, alerts-raw) via scripts/create-topics.ps1. Générateur v2 opérationnel : émet vers netflow (trafic réseau) ET auth (événements SSH/login) selon le type d'événement. Attaque brute_force visible dans les deux topics simultanément. make.ps1 enrichi (consume-netflow, consume-auth).
+- 🚧 Bloqué / retard : Aucun bloquage. Légère avance sur le planning (topics créés en début de semaine).
+- 🧠 Appris : Séparation des responsabilités entre topics (netflow = réseau, auth = authentification). Pattern producteur multi-topics. Rôle de chaque source de données : générateur pour la baseline non supervisée, CIC-IDS2017 pour la classification supervisée en S5.
+- ⚖️ Décision prise : Garder le générateur maison comme source principale jusqu'à S4. CIC-IDS2017 réservé à l'entraînement supervisé (S5).
+- ➡️ Priorité S3 :Premier consumer Spark Structured Streaming : lecture Kafka, fenêtres glissantes (5 min / 1 h), agrégations par IP (nb connexions, bytes, ratio SYN, entropie ports). Stockage Parquet sur MinIO.
 - 📸 Preuve (capture, lien commit) :
 
 ---
 
 ## Semaine 3 - 19 → 23 octobre 2026
 
-- ✅ Fait :
-- 🚧 Bloqué / retard :
-- 🧠 Appris :
-- ⚖️ Décision prise :
-- ➡️ Priorité S4 :
+- ✅ Fait :Préparation du pipeline Spark Structured Streaming : lecture des événements Kafka (netflow et auth), calcul de 7 features réseau et 3 features d'authentification, puis écriture prévue au format Parquet sur un stockage S3 local. Préparation de l'architecture Docker avec Spark Master/Worker et LocalStack pour remplacer MinIO. Ajout prévu de commandes PowerShell pour soumettre le job Spark et vérifier les données stockées.
+- 🚧 Bloqué / retard :Erreur de récupération de l'image Docker minio/minio. Remplacement envisagé par LocalStack, compatible avec le stockage S3 local. Le bon fonctionnement du pipeline complet reste à tester.
+- 🧠 Appris :Fonctionnement de Spark Structured Streaming avec Kafka. Importance des features agrégées pour l'analyse comportementale du trafic réseau. Découverte de LocalStack comme solution de stockage S3 local et du format Parquet pour conserver les données structurées.
+- ⚖️ Décision prise :Remplacer MinIO par LocalStack pour éviter le problème de récupération de l'image Docker. Conserver Kafka comme source des événements, Spark pour le traitement en continu et S3 pour le stockage des features.
+- ➡️ Priorité S4 :Finaliser et tester le pipeline de bout en bout : génération des événements, lecture Kafka par Spark, calcul des features et écriture Parquet dans LocalStack. Vérifier les données produites et préparer leur exploitation par Isolation Forest pour la détection d'anomalies.
 - 📸 Preuve (capture, lien commit) :
 
 ---

@@ -1,0 +1,2 @@
+# Spark est déjà inclus dans l'image de base
+# Ajouter ici les dépendances Python spécifiques si besoin
