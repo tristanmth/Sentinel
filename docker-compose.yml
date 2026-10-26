@@ -31,14 +31,14 @@ services:
       KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka:9092
 
   localstack:
-    image: localstack/localstack:latest
+    image: localstack/localstack:3.8
     container_name: sentinel-localstack
     ports:
       - "4566:4566"
     environment:
       SERVICES: s3
       DEBUG: "0"
-      DATA_DIR: /var/lib/localstack/data
+      #DATA_DIR: /var/lib/localstack/data
       AWS_DEFAULT_REGION: us-east-1
       AWS_ACCESS_KEY_ID: sentinel
       AWS_SECRET_ACCESS_KEY: sentinel123
